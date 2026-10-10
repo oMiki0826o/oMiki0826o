@@ -1,0 +1,45 @@
+# 檔名：snake.yml
+# Modification：2026-10-11
+# 每日依 GitHub 貢獻方格重新產生 SVG，儲存至 output 分支。
+name: Generate contribution snake
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 2 * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/snake.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: profile-snake
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    name: Generate and publish SVG
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Generate light and dark SVGs
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/snake.svg?color_snake=%23a4814f&color_dots=%23f8f7f1,%23dce9dd,%23b7d0bb,%2384aa8c,%23456b54
+            dist/snake-dark.svg?color_snake=%23dec799&color_dots=%2316221d,%23304839,%234d6d53,%2374997b,%23b1d0b4
+
+      - name: Publish generated SVGs to output branch
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

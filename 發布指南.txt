@@ -1,0 +1,57 @@
+Miki GitHub Profile — 發布與驗證指南
+================================
+
+一、用途
+這份檔案用於 GitHub 個人首頁 README，與個人網站（GitHub Pages）完全分開。
+內含繁體中文／英文介紹、深淺色 SVG 橫幅、第三方 GitHub 統計，以及貢獻蛇自動產生工作流程。
+
+二、建立個人首頁倉庫
+1. 在 GitHub 建立公開倉庫：oMiki0826o/oMiki0826o。
+   注意：倉庫名稱要與帳號完全相同，才能出現在個人首頁。
+2. 將 ZIP 根目錄的所有檔案上傳到新倉庫的 main 分支。
+   包括隱藏資料夾 .github/workflows/snake.yml；不要只上傳 README.md。
+3. 等待 GitHub Actions 完成首次工作流程。亦可前往 Actions →
+   Generate contribution snake → Run workflow 手動觸發。
+4. 完成後會建立 output 分支，內含 snake.svg、snake-dark.svg。
+5. 前往 https://github.com/oMiki0826o 檢查兩個統計圖及貢獻蛇是否出現。
+
+三、Git 操作範例
+  git clone https://github.com/oMiki0826o/oMiki0826o.git
+  cd oMiki0826o
+  # 把本套件全部檔案（包括 .github 隱藏資料夾）複製至此
+  git add README.md README.en.md assets/ .github/workflows/snake.yml
+  git commit -m "feat: add bilingual profile with stats and contribution snake"
+  git push origin main
+
+四、設定及故障排查
+- GitHub Actions 應已在倉庫啟用。
+- 工作流程內已為 generate job 設定 permissions: contents: write。
+- 如果出現 403 resource not accessible by integration，前往 Settings → Actions →
+  General → Workflow permissions，檢查 GitHub Actions 的寫入權限與其他組織限制。
+- 如果 output 分支被保護，請調整規則使發行工作流程可以寫入，
+  或改用其他獲允許的發行策略；不建議停用主分支保護。
+- 貢獻蛇產物不是隨 ZIP 直接附送的真實貢獻圖，而是 GitHub Actions
+  執行後向 GitHub 取得公開貢獻紀錄並產生。首次執行前 README 會暫時缺圖。
+- 排程使用 UTC 02:17（臺灣時間 10:17）。GitHub 排程可能延遲。
+- 當 output 分支被刪除或工作流程失敗時，README 的 SVG 可能無法載入。
+- 外部統計卡片依賴 https://github-readme-stats.vercel.app/ 的公開服務，
+  如遇到暫時性錯誤、速率限制或快取，可稍後重新整理；這不是 GitHub 官方服務。
+- 統計卡片上的 A / A+ / S 等評級由第三方模型動態計算，
+  不代表作者一定是 A+，也不宜視為程式能力的客觀評量。
+- 程式語言卡片依 GitHub 倉庫語言比例推算，不代表能力或使用時數。
+
+五、設計與維護
+- 保留原版墨綠、米白的極簡排版。
+- 橫幅為本機 assets 下的原生 SVG，未加入動畫或第三方字型。
+- GitHub 統計依賴外部圖片服務；貢獻蛇 SVG 則由 Actions 每日重建。
+- 中英文頁面具有相同的 GitHub 活動及貢獻蛇區塊。
+- 不包含電子郵件、所在地、學校等未確認的私人資訊。
+- 不必為個人 README 啟用 GitHub Pages。
+
+六、資料來源
+- https://github.com/anuraghazra/github-readme-stats
+- https://github.com/Platane/snk
+- https://github.com/crazy-max/ghaction-github-pages
+- https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme
+
+目前沒有代為建立或變更 GitHub 遠端倉庫；上傳後仍需檢查 Actions 的實際執行結果。

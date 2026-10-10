@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 240" role="img" aria-labelledby="title desc">
+  <title id="title">Miki</title>
+  <desc id="desc">A minimal cream and forest-green header: Miki — Making small things, carefully.</desc>
+  <rect width="1100" height="240" rx="8" fill="#F8F7F1"/>
+  <rect x="33" y="30" width="4" height="179" rx="2" fill="#6B8876"/>
+  <text x="66" y="61" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="600" letter-spacing="4" fill="#698575">PERSONAL GITHUB</text>
+  <text x="62" y="145" font-family="Georgia, 'Times New Roman', serif" font-size="90" fill="#2D4A3F">Miki.</text>
+  <text x="66" y="188" font-family="Arial, Helvetica, sans-serif" font-size="19" letter-spacing="1.1" fill="#566B61">Making small things, carefully.</text>
+</svg>
