@@ -27,6 +27,8 @@ def sample():
              "languages": {"edges": [{"size": 500, "node": {"name": "Java", "color": "#b07219"}}]}},
         ]},
         "contributionsCollection": {"totalCommitContributions": 12},
+        "reviews": {"totalPullRequestReviewContributions": 0},
+        "followers": {"totalCount": 0},
         "pullRequests": {"totalCount": 3},
         "issues": {"totalCount": 4},
         "repositoriesContributedTo": {"totalCount": 2},
@@ -88,6 +90,22 @@ class ReadmeTests(unittest.TestCase):
                 p.build(root, bad, __import__("datetime").datetime.now(__import__("datetime").timezone.utc))
             self.assertEqual((root / "README.md").read_text(encoding="utf-8"), original)
             self.assertFalse((root / "assets").exists())
+
+    def test_rank_uses_upstream_grades(self):
+        self.assertEqual(p.calculate_rank(commits=0, prs=0, issues=0, reviews=0, stars=0, followers=0)[0], "C")
+        self.assertEqual(p.calculate_rank(commits=5000, prs=1000, issues=1000, reviews=1000, stars=5000, followers=1000)[0], "S")
+        self.assertEqual(p.calculate_rank(commits=448, prs=12, issues=0, reviews=0, stars=14, followers=0)[0], "B-")
+
+    def test_stats_svg_shows_rank_not_year_as_grade(self):
+        data = sample()
+        data["followers"] = {"totalCount": 0}
+        data["reviews"] = {"totalPullRequestReviewContributions": 0}
+        svg = p.svg_stats(data, 2026, dark=True)
+        self.assertIn('class="rank-grade"', svg)
+        self.assertIn('class="rank-ring"', svg)
+        self.assertIn('data-rank-percentile="', svg)
+        self.assertNotIn("PUBLIC DATA", svg)
+        self.assertIn('Third-party estimate', svg)
 
     def test_real_readme_links_to_local_stats_and_snake(self):
         readme = (SCRIPT.parents[1] / "README.md").read_text(encoding="utf-8")
