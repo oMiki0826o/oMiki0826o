@@ -16,7 +16,11 @@
 <!-- PINNED_PROJECTS_START -->
 | 專案 | 簡介 |
 | :--- | :--- |
-| [查看 GitHub 釘選作品](https://github.com/oMiki0826o) | 自動同步釘選專案中 |
+| [Discord-bot](https://github.com/oMiki0826o/Discord-bot) | 一款基於 discord.py 開發的多功能模組化 Discord Bot. |
+| [NoteBlockTweaks](https://github.com/oMiki0826o/NoteBlockTweaks) | NoteBlock Tweaks 是 Fabric 純客戶端模組. 擴充 Tweakeroo 提供音階盒 0-24 音高調音介面, 音高複製與貼上等功能. |
+| [AI-Development-Governance](https://github.com/oMiki0826o/AI-Development-Governance) | 一套給 AI Coding Agent 與人類協作者使用的開發治理規範。 |
+| [Codex-Workspace-Web](https://github.com/oMiki0826o/Codex-Workspace-Web) | 在私人 VPN／區域網路中使用的自架 Codex Web 介面。以固定 Ubuntu 工作區為範圍，透過 Codex CLI／App Server 執行任務，支援原生對話同步、模型與推理選擇、工具事件、Token 與用量顯示，以及手機 PWA 使用。 |
+| [LowYOutpostFinder](https://github.com/oMiki0826o/LowYOutpostFinder) | 一個專為 Minecraft Java 版設計的低高度前哨站查找工具。 |
 <!-- PINNED_PROJECTS_END -->
 
 ## GitHub 活動
