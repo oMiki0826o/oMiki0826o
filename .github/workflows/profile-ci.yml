@@ -1,0 +1,29 @@
+name: Profile README checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [feat/profile-readme-automation]
+    paths:
+      - README.md
+      - scripts/**
+      - tests/**
+      - assets/**
+      - .github/workflows/profile-ci.yml
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Python compilation
+        run: python -m py_compile scripts/update_profile.py
+      - name: Unit and integration tests
+        run: python -m unittest discover -s tests -v

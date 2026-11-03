@@ -1,0 +1,46 @@
+name: Update profile cards and pinned projects
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '29 3 * * *'
+  push:
+    branches:
+      - main
+      - feat/profile-readme-automation
+    paths:
+      - scripts/update_profile.py
+      - .github/workflows/profile-sync.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-sync-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Run tests before publishing
+        run: python -m unittest discover -s tests -v
+      - name: Generate pinned projects and cached SVG statistics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/update_profile.py
+      - name: Commit only verified generated output
+        run: |
+          git add README.md assets/stats-light.svg assets/stats-dark.svg assets/top-langs-light.svg assets/top-langs-dark.svg
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: refresh public profile data'
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi

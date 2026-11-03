@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="260" viewBox="0 0 700 260" role="img" aria-label="GitHub statistics for 2026">
+<rect x="1" y="1" width="698" height="258" rx="9" fill="#ffffff" stroke="#d0d7de" />
+<text x="30" y="43" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#2d604c">Miki’s GitHub Statistics</text>
+<text x="30" y="81" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#24292f">Total Stars:</text>
+<text x="307" y="81" font-family="Arial,sans-serif" font-size="18" fill="#24292f">14</text>
+<text x="30" y="113" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#24292f">Total Commits (2026):</text>
+<text x="307" y="113" font-family="Arial,sans-serif" font-size="18" fill="#24292f">448</text>
+<text x="30" y="145" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#24292f">Total PRs:</text>
+<text x="307" y="145" font-family="Arial,sans-serif" font-size="18" fill="#24292f">11</text>
+<text x="30" y="177" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#24292f">Total Issues:</text>
+<text x="307" y="177" font-family="Arial,sans-serif" font-size="18" fill="#24292f">0</text>
+<text x="30" y="209" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#24292f">Contributed to:</text>
+<text x="307" y="209" font-family="Arial,sans-serif" font-size="18" fill="#24292f">0</text>
+<circle cx="590" cy="135" r="65" fill="none" stroke="#d0d7de" stroke-width="12"/>
+<circle cx="590" cy="135" r="65" fill="none" stroke="#2d604c" stroke-width="12" stroke-dasharray="260 410" transform="rotate(-90 590 135)" />
+<text x="590" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="29" font-weight="700" fill="#24292f">2026</text>
+<text x="590" y="166" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#57606a">PUBLIC DATA</text>
+</svg>
