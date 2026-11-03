@@ -94,7 +94,9 @@ class ReadmeTests(unittest.TestCase):
     def test_rank_uses_upstream_grades(self):
         self.assertEqual(p.calculate_rank(commits=0, prs=0, issues=0, reviews=0, stars=0, followers=0)[0], "C")
         self.assertEqual(p.calculate_rank(commits=5000, prs=1000, issues=1000, reviews=1000, stars=5000, followers=1000)[0], "S")
-        self.assertEqual(p.calculate_rank(commits=448, prs=12, issues=0, reviews=0, stars=14, followers=0)[0], "B-")
+        grade, percentile = p.calculate_rank(commits=448, prs=12, issues=0, reviews=0, stars=14, followers=0)
+        self.assertEqual(grade, "C+")
+        self.assertAlmostEqual(percentile, 77.0231569, places=5)
 
     def test_stats_svg_shows_rank_not_year_as_grade(self):
         data = sample()
