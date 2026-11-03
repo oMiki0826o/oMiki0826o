@@ -28,6 +28,8 @@ QUERY = """query($login: String!, $after: String, $from: DateTime!, $to: DateTim
       nodes { ... on Repository { name nameWithOwner url description } }
     }
     contributionsCollection(from: $from, to: $to) { totalCommitContributions }
+    reviews: contributionsCollection { totalPullRequestReviewContributions }
+    followers { totalCount }
     pullRequests(first: 1) { totalCount }
     issues(first: 1) { totalCount }
     repositoriesContributedTo(first: 1) { totalCount }
@@ -156,32 +158,79 @@ def language_totals(user: dict, login: str = LOGIN) -> list[tuple[str, int, str]
     return [(name, count, colors[name]) for name, count in sorted(total.items(), key=lambda it: (-it[1], it[0]))]
 
 
+def calculate_rank(*, commits: int, prs: int, issues: int, reviews: int,
+                   stars: int, followers: int) -> tuple[str, float]:
+    """Third-party rank estimate following github-readme-stats' MIT-licensed
+    calculateRank algorithm (github.com/anuraghazra/github-readme-stats).
+    The result is a heuristic grade, not an official GitHub ranking.
+    """
+    def exponential_cdf(value: float) -> float:
+        return 1 - 2 ** (-value)
+
+    def log_normal_cdf(value: float) -> float:
+        return value / (1 + value)
+
+    score = 1 - (
+        2 * exponential_cdf(commits / 250)
+        + 3 * exponential_cdf(prs / 50)
+        + exponential_cdf(issues / 25)
+        + exponential_cdf(reviews / 2)
+        + 4 * log_normal_cdf(stars / 50)
+        + log_normal_cdf(followers / 10)
+    ) / 12
+    percentile = max(0, min(100, score * 100))
+    thresholds = (1, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100)
+    levels = ("S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C")
+    grade = next(level for threshold, level in zip(thresholds, levels)
+                 if percentile <= threshold)
+    return grade, percentile
+
+
 def svg_stats(user: dict, year: int, *, dark: bool) -> str:
     fg = "#e6edf3" if dark else "#24292f"
     title = "#a6c4ae" if dark else "#2d604c"
     muted = "#9da7b3" if dark else "#57606a"
     bg = "#0d1117" if dark else "#ffffff"
     edge = "#33473e" if dark else "#d0d7de"
+    stars = sum(int(x.get("stargazerCount") or 0) for x in ((user.get("repositories") or {}).get("nodes") or []))
+    commits = int((user.get("contributionsCollection") or {})["totalCommitContributions"])
+    prs = int((user.get("pullRequests") or {})["totalCount"])
+    issues = int((user.get("issues") or {})["totalCount"])
+    contributed = int((user.get("repositoriesContributedTo") or {})["totalCount"])
+    reviews = int((user.get("reviews") or {})["totalPullRequestReviewContributions"])
+    followers = int((user.get("followers") or {})["totalCount"])
+    rank, percentile = calculate_rank(
+        commits=commits, prs=prs, issues=issues,
+        reviews=reviews, stars=stars, followers=followers,
+    )
     props = [
-        ("Total Stars:", sum(int(x.get("stargazerCount") or 0) for x in ((user.get("repositories") or {}).get("nodes") or []))),
-        (f"Total Commits ({year}):", int((user.get("contributionsCollection") or {})["totalCommitContributions"])),
-        ("Total PRs:", int((user.get("pullRequests") or {})["totalCount"])),
-        ("Total Issues:", int((user.get("issues") or {})["totalCount"])),
-        ("Contributed to:", int((user.get("repositoriesContributedTo") or {})["totalCount"])),
+        ("Total Stars:", stars),
+        (f"Total Commits ({year}):", commits),
+        ("Total PRs:", prs),
+        ("Total Issues:", issues),
+        ("Contributed to:", contributed),
     ]
-    elements = [f'<svg xmlns="http://www.w3.org/2000/svg" width="700" height="260" viewBox="0 0 700 260" role="img" aria-label="GitHub statistics for {year}">',
-                f'<rect x="1" y="1" width="698" height="258" rx="9" fill="{bg}" stroke="{edge}" />',
-                f'<text x="30" y="43" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="{title}">Miki’s GitHub Statistics</text>']
+    radius = 65
+    circumference = 2 * 3.141592653589793 * radius
+    fraction = 1 - percentile / 100
+    dash = f"{fraction * circumference:.2f} {circumference:.2f}"
+    elements = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="700" height="260" viewBox="0 0 700 260" role="img" aria-label="GitHub statistics and third-party estimated rank {escape(rank)}">',
+        f'<rect x="1" y="1" width="698" height="258" rx="9" fill="{bg}" stroke="{edge}" />',
+        f'<text x="30" y="43" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="{title}">Miki’s GitHub Statistics</text>',
+    ]
     for index, (label, number) in enumerate(props):
         y = 81 + index * 32
         elements.append(f'<text x="30" y="{y}" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="{fg}">{escape(label)}</text>')
         elements.append(f'<text x="307" y="{y}" font-family="Arial,sans-serif" font-size="18" fill="{fg}">{number:,}</text>')
     elements += [
-        f'<circle cx="590" cy="135" r="65" fill="none" stroke="{edge}" stroke-width="12"/>',
-        f'<circle cx="590" cy="135" r="65" fill="none" stroke="{title}" stroke-width="12" stroke-dasharray="260 410" transform="rotate(-90 590 135)" />',
-        f'<text x="590" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="29" font-weight="700" fill="{fg}">{year}</text>',
-        f'<text x="590" y="166" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="{muted}">PUBLIC DATA</text>',
-        '</svg>']
+        f'<circle cx="590" cy="132" r="{radius}" fill="none" stroke="{edge}" stroke-width="12"/>',
+        f'<circle class="rank-ring" data-rank-percentile="{percentile:.2f}" cx="590" cy="132" r="{radius}" fill="none" stroke="{title}" stroke-width="12" stroke-dasharray="{dash}" transform="rotate(-90 590 132)" />',
+        f'<text class="rank-grade" x="590" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="{fg}">{escape(rank)}</text>',
+        f'<text x="590" y="166" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="{muted}">ESTIMATED RANK</text>',
+        f'<text x="30" y="247" font-family="Arial,sans-serif" font-size="11" fill="{muted}">Third-party estimate · not an official GitHub grade</text>',
+        '</svg>',
+    ]
     return "\n".join(elements) + "\n"
 
 
