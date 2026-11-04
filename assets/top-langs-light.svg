@@ -4,18 +4,18 @@
 <circle cx="37" cy="73" r="6" fill="#3572A5"/>
 <text x="52" y="78" font-family="Arial,sans-serif" font-size="16" fill="#24292f">Python</text>
 <rect x="255" y="66" width="335" height="14" rx="7" fill="#eef2ef"/>
-<rect x="255" y="66" width="205" height="14" rx="7" fill="#3572A5"/>
-<text x="664" y="78" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#24292f">61.2%</text>
+<rect x="255" y="66" width="207" height="14" rx="7" fill="#3572A5"/>
+<text x="664" y="78" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#24292f">61.9%</text>
 <circle cx="37" cy="108" r="6" fill="#3178c6"/>
 <text x="52" y="113" font-family="Arial,sans-serif" font-size="16" fill="#24292f">TypeScript</text>
 <rect x="255" y="101" width="335" height="14" rx="7" fill="#eef2ef"/>
-<rect x="255" y="101" width="55" height="14" rx="7" fill="#3178c6"/>
-<text x="664" y="113" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#24292f">16.4%</text>
+<rect x="255" y="101" width="54" height="14" rx="7" fill="#3178c6"/>
+<text x="664" y="113" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#24292f">16.1%</text>
 <circle cx="37" cy="143" r="6" fill="#f1e05a"/>
 <text x="52" y="148" font-family="Arial,sans-serif" font-size="16" fill="#24292f">JavaScript</text>
 <rect x="255" y="136" width="335" height="14" rx="7" fill="#eef2ef"/>
-<rect x="255" y="136" width="39" height="14" rx="7" fill="#f1e05a"/>
-<text x="664" y="148" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#24292f">11.6%</text>
+<rect x="255" y="136" width="38" height="14" rx="7" fill="#f1e05a"/>
+<text x="664" y="148" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#24292f">11.3%</text>
 <circle cx="37" cy="178" r="6" fill="#b07219"/>
 <text x="52" y="183" font-family="Arial,sans-serif" font-size="16" fill="#24292f">Java</text>
 <rect x="255" y="171" width="335" height="14" rx="7" fill="#eef2ef"/>
