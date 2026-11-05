@@ -5,7 +5,7 @@
 <text x="52" y="78" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">Python</text>
 <rect x="255" y="66" width="335" height="14" rx="7" fill="#212b2a"/>
 <rect x="255" y="66" width="207" height="14" rx="7" fill="#3572A5"/>
-<text x="664" y="78" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">61.9%</text>
+<text x="664" y="78" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">61.8%</text>
 <circle cx="37" cy="108" r="6" fill="#3178c6"/>
 <text x="52" y="113" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">TypeScript</text>
 <rect x="255" y="101" width="335" height="14" rx="7" fill="#212b2a"/>
@@ -15,7 +15,7 @@
 <text x="52" y="148" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">JavaScript</text>
 <rect x="255" y="136" width="335" height="14" rx="7" fill="#212b2a"/>
 <rect x="255" y="136" width="38" height="14" rx="7" fill="#f1e05a"/>
-<text x="664" y="148" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">11.3%</text>
+<text x="664" y="148" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">11.4%</text>
 <circle cx="37" cy="178" r="6" fill="#b07219"/>
 <text x="52" y="183" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">Java</text>
 <rect x="255" y="171" width="335" height="14" rx="7" fill="#212b2a"/>
@@ -30,6 +30,6 @@
 <text x="52" y="253" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">HTML</text>
 <rect x="255" y="241" width="335" height="14" rx="7" fill="#212b2a"/>
 <rect x="255" y="241" width="6" height="14" rx="7" fill="#e34c26"/>
-<text x="664" y="253" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">1.8%</text>
+<text x="664" y="253" text-anchor="end" font-family="Arial,sans-serif" font-size="16" fill="#e6edf3">1.7%</text>
 <text x="30" y="305" font-family="Arial,sans-serif" font-size="12" fill="#9da7b3">Public, non-fork, active repositories · measured by language bytes</text>
 </svg>
